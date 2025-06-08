@@ -1,6 +1,7 @@
 import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from "dotenv";
+import MoviesDAO from "./dao/moviesDAO.js";
 
 // Ham bat dong bo
 async function main() {
@@ -11,8 +12,9 @@ async function main() {
   // Tao port truy cap thong tin tu bien moi truong, Khong thi lay port 8000
   const port = process.env.PORT || 8000;
   try {
-    // Tra ve 1 promise, await giup block tru khi hoan tat
+    // Tra ve 1 promise, await giup block tru khi hoan tat, connect mongoDB
     await client.connect();
+    await MoviesDAO.injectDB(client);
     // Nếu không có lỗi thì sẽ chay server
     app.listen(port, () => {
       console.log("Server is running on port: " + port);
