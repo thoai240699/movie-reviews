@@ -6,7 +6,7 @@ export default class MoviesDAO {
       return;
     }
     try {
-      movies = await conn.db(process.env.MOVIEREVIEWS_NS).collection("movies");
+      movies = await conn.db(process.env.MOVIEREVIEWS_NS).collection('movies');
     } catch (e) {
       console.error(`Unable to connect in MoviesDAO: ${e}`);
     }
@@ -19,10 +19,10 @@ export default class MoviesDAO {
   } = {}) {
     let query;
     if (filters) {
-      if ("title" in filters) {
-        query = { $text: { $search: filters["title"] } };
-      } else if ("rated" in filters) {
-        query = { rated: { $eq: filters["rated"] } };
+      if ('title' in filters) {
+        query = { $text: { $search: filters['title'] } };
+      } else if ('rated' in filters) {
+        query = { rated: { $eq: filters['rated'] } };
       }
     }
 
