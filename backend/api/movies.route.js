@@ -1,7 +1,7 @@
 import express from "express";
 
 import MoviesController from "./movies.controller.js";
-import ReviewsController from "./review.controller.js";
+import ReviewsController from "./reviews.controller.js";
 
 // Định nghĩa các điểm cuối API cho các hoạt động liên quan đến phim
 const router = express.Router();

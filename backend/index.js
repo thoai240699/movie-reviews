@@ -2,6 +2,7 @@ import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from "dotenv";
 import MoviesDAO from "./dao/moviesDAO.js";
+import ReviewsDAO from "./dao/reviewsDAO.js";
 
 // Ham bat dong bo
 async function main() {
@@ -15,6 +16,7 @@ async function main() {
     // Kết nối đến MongoDB và khởi tạo DAO
     await client.connect();
     await MoviesDAO.injectDB(client);
+    await ReviewsDAO.injectDB(client)
 
     app.listen(port, () => {
       console.log("Server is running on port: " + port);
