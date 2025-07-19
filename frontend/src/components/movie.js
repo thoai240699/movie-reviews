@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import MovieDataService from "../services/movies";
-import { Link } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/Button";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import MovieDataService from '../services/movies';
+import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import moment from 'moment';
 
 const Movie = (props) => {
   const [movie, setMovie] = useState({
     id: null,
-    title: "",
-    rated: "",
+    title: '',
+    rated: '',
     reviews: [],
   });
 
@@ -32,12 +32,25 @@ const Movie = (props) => {
     getMovie(props.match.params.id);
   }, [props.match.params.id]);
 
+  const deleteReview = (reviewId, index) => {
+    MovieDataService.deleteReview(reviewId, props.user.id)
+      .then((response) => {
+        setMovie((prevState) => {
+          prevState.reviews.splice(index, 1);
+          return { ...prevState };
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
       <Container>
         <Row>
           <Col>
-            <Image src={movie.poster + "/100px250"} fluid />
+            <Image src={movie.poster + '/100px250'} fluid />
           </Col>
           <Col>
             <Card>
@@ -45,7 +58,7 @@ const Movie = (props) => {
               <Card.Body>
                 <Card.Text>{movie.plot}</Card.Text>
                 {props.user && (
-                  <Link to={"/movies/" + props.match.params.id + "/review"}>
+                  <Link to={'/movies/' + props.match.params.id + '/review'}>
                     Add Review
                   </Link>
                 )}
@@ -59,8 +72,8 @@ const Movie = (props) => {
                 <Card key={index} className="mb-3">
                   <Card.Body>
                     <h5>
-                      {review.name + " reviewed on "}
-                      {moment(review.date).format("Do MMMM YYYY")}
+                      {review.name + ' reviewed on '}
+                      {moment(review.date).format('Do MMMM YYYY')}
                     </h5>
                     <p>{review.review}</p>
                     {props.user && props.user.id === review.user_id && (
@@ -69,7 +82,7 @@ const Movie = (props) => {
                           <Link
                             to={{
                               pathname:
-                                "/movies/" + props.match.params.id + "/review",
+                                '/movies/' + props.match.params.id + '/review',
                               state: { currentReview: review },
                             }}
                           >
@@ -77,7 +90,12 @@ const Movie = (props) => {
                           </Link>
                         </Col>
                         <Col>
-                          <Button variant="link">Delete</Button>
+                          <Button
+                            variant="link"
+                            onClick={() => deleteReview(review._id, index)}
+                          >
+                            Delete
+                          </Button>
                         </Col>
                       </Row>
                     )}
