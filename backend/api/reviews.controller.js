@@ -4,7 +4,7 @@ export default class ReviewsController {
   // Create review
   static async apiPostReview(req, res, next) {
     try {
-      const moviesId = req.body.moviesId;
+      const moviesId = req.body.movie_id;
       const review = req.body.review;
       const userInfo = {
         name: req.body.name,

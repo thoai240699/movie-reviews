@@ -28,7 +28,7 @@ export default class MoviesController {
     });
 
     let response = {
-      movie: moviesList,
+      movies: moviesList,
       page: page,
       filters: filters,
       entries_per_page: moviesPerPage,
